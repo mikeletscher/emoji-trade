@@ -124,6 +124,10 @@ input.main-search.tt-hint {
 .fade-in-after-render {
   opacity: 0;
 }
+.fade-slide-in-after-render {
+  opacity: 0;
+  transform: translateY(-26px);
+}
 
 .range-select {
   list-style: none;
@@ -169,6 +173,12 @@ input.main-search.tt-hint {
 .tt-menu .tt-suggestion {
   padding: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.tt-icon {
+  max-width: 30px;
+  margin-right: 18px;
 }
 .tt-menu .tt-suggestion:last-child {
   border-bottom-right-radius: 8px;

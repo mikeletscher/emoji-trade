@@ -13,15 +13,17 @@ var SearchForm = {
     var _vm = this;
 
     this.$nextTick(function() {
+      TweenMax.to($('.fade-slide-in-after-render'), 1, { opacity: 1, y: 0 });
+
       var emojies = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: ['laugh', 'cry', 'sad', 'mad']
+        local: [{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }]
       });
 
       function emojiesWithDefaults(q, sync) {
         if (q === '') {
-          sync(emojies.get('laugh', 'sad', 'cry', 'mad'));
+          sync([{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }]);
         } else {
           emojies.search(q, sync);
         }
@@ -34,13 +36,17 @@ var SearchForm = {
       },
       {
         name: 'emojies',
-        source: emojiesWithDefaults
+        display: 'name',
+        source: emojiesWithDefaults,
+        templates: {
+          suggestion: _.template('<div><img src="images/emoji/<%- img %>" class="tt-icon"> <%- name %></div>')
+        }
       }).bind('typeahead:select', function(ev, suggestion) {
         _vm.loading = true;
 
         if((['emoji-view']).indexOf(_vm.$route.name) >= 0) {
           _vm.loading = false;
-          router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
+          router.push({ name: 'emoji-view', params: { emojiId: suggestion.name }});
         } else {
           var searchForm = $('.search-form');
 
@@ -54,7 +60,7 @@ var SearchForm = {
           TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 87, ease: Expo.easeOut });
 
           TweenMax.to(searchForm, 0.7, { top: -43, ease: Expo.easeOut, onComplete: function() {
-            router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
+            router.push({ name: 'emoji-view', params: { emojiId: suggestion.name }});
           }});
         }
       });;
