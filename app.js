@@ -18,12 +18,12 @@ var SearchForm = {
       var emojies = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: [{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }, { img: '1f3d4.png', name: 'mountain' }]
+        local: [{ img: '1f602.png', name: 'joy' }]
       });
 
       function emojiesWithDefaults(q, sync) {
         if (q === '') {
-          sync([{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }, { img: '1f3d4.png', name: 'mountain' }]);
+          sync([{ img: '1f602.png', name: 'joy' }]);
         } else {
           emojies.search(q, sync);
         }
@@ -46,7 +46,7 @@ var SearchForm = {
 
         if((['emoji-view']).indexOf(_vm.$route.name) >= 0) {
           _vm.loading = false;
-          router.push({ name: 'emoji-view', params: { emojiId: suggestion.name }});
+          router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '30min' }});
         } else {
           var searchForm = $('.search-form');
 
@@ -60,7 +60,7 @@ var SearchForm = {
           TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 87, ease: Expo.easeOut });
 
           TweenMax.to(searchForm, 0.7, { top: -43, ease: Expo.easeOut, onComplete: function() {
-            router.push({ name: 'emoji-view', params: { emojiId: suggestion.name }});
+            router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '30min' }});
           }});
         }
       });;
@@ -83,66 +83,86 @@ var EmojiViewPage = {
   data: function() {
     return {
       rendered: true,
-      chart: null
+      chart: null,
+      chartData: {},
+      currentDuration: this.$route.params.duration || '30min'
     };
   },
 
   created: function() {
     var _vm = this;
 
-    this.$nextTick(function() {
-      var containerHeight = $('.ct-chart').outerHeight();
+    $.get('http://newminion.com:1234/charts?id=1F602', function(data) {
+      var graphData = JSON.parse(data);
+      _vm.chartData = graphData;
 
-      _vm.chart = new Chartist.Line('.ct-chart', {
-        labels: ['1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm', '2:15pm'],
-        series: [
-          [12, 9, 7, 8, 5, 8]
-        ]
-      }, {
-        axisY: {
-          onlyInteger: true,
-        },
-        fullWidth: true,
-        height: containerHeight + 'px',
-        chartPadding: {
-          right: 56,
-          top: 42,
-          bottom: 18,
-          left: 20
-        }
+      _vm.$nextTick(function() {
+        var containerHeight = $('.ct-chart').outerHeight();
+
+        _vm.chart = new Chartist.Line('.ct-chart', {
+          labels: _vm.formatDates(graphData[_vm.currentDuration][0]),
+          series: [
+            graphData[_vm.currentDuration][1]
+          ]
+        }, {
+          axisY: {},
+          fullWidth: true,
+          height: containerHeight + 'px',
+          chartPadding: {
+            right: 56,
+            top: 42,
+            bottom: 48,
+            left: 54
+          },
+          lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0
+          })
+        });
+
+        _vm.chart.on('draw', function(data) {
+          if(data.type === 'line' || data.type === 'area') {
+            data.element.animate({
+              d: {
+                begin: 2000 * data.index,
+                dur: 900,
+                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                to: data.path.clone().stringify(),
+                easing: Chartist.Svg.Easing.easeOutQuint
+              }
+            });
+          }
+        });
+
+        TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 1 });
       });
-
-      _vm.chart.on('draw', function(data) {
-        if(data.type === 'line' || data.type === 'area') {
-          data.element.animate({
-            d: {
-              begin: 2000 * data.index,
-              dur: 1200,
-              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-              to: data.path.clone().stringify(),
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
-          });
-        }
-      });
-
-      TweenMax.to($('.fade-in-after-render'), 0.5, { opacity: 1 });
     });
   },
 
   methods: {
+    formatDates: function(dates) {
+      return _.map(dates, function(date, index) {
+        if (index > 0 && moment(date).format("M/D") == moment(dates[index - 1]).format("M/D")) {
+          return moment(date).format("H:mma");
+        } else {
+          return moment(date).format("M/D H:mma");
+        }
+      });
+    },
+
     viewDuration: function(duration) {
       var _vm = this;
 
-      TweenMax.to($('.ct-chart'), 0.5, { opacity: 0, onComplete: function() {
+      this.currentDuration = duration;
+
+      TweenMax.to($('.ct-chart'), 0.2, { opacity: 0, onComplete: function() {
         _vm.chart.update({
-          labels: ['1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm', '2:15pm'],
+          labels: _vm.formatDates(_vm.chartData[_vm.currentDuration][0]),
           series: [
-            [4, 3, 5, 1, 4, 9]
+            _vm.chartData[_vm.currentDuration][1]
           ]
         });
 
-        TweenMax.to($('.ct-chart'), 0.3, { opacity: 1 });
+        TweenMax.to($('.ct-chart'), 0.2, { opacity: 1 });
       } });
     }
   },
@@ -162,7 +182,7 @@ var EmojiViewPage = {
 var router = new VueRouter({
   routes: [
     { path: '/', name: 'search', component: SearchHomePage },
-    { path: '/emoji/:emojiId', name: 'emoji-view', component: EmojiViewPage }
+    { path: '/emoji/:emojiId/:duration', name: 'emoji-view', component: EmojiViewPage }
   ]
 });
 

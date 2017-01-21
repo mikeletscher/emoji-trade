@@ -20,7 +20,6 @@
             <h1 class="logo"><router-link to="/">emojitrade</router-link></h1>
           </div>
           <div class="col-xs-4 col-xs-offset-4 text-right">
-            <a href="#">login</a>
           </div>
         </div>
       </div>
@@ -49,17 +48,16 @@
 
         <div class="emoji-info fade-in-after-render">
           <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-5">
               <h2>history for "{{emojiId}}"</h2>
             </div>
 
-            <div class="col-xs-6 text-right">
+            <div class="col-xs-7 text-right">
               <ul class="range-select">
-                <li><a href="#" v-on:click.prevent="viewDuration(900)">5min</a></li>
-                <li><a href="#" v-on:click.prevent="viewDuration(900)">30min</a></li>
-                <li><a href="#" v-on:click.prevent="viewDuration(900)">1hr</a></li>
-                <li><a href="#" v-on:click.prevent="viewDuration(900)">12hr</a></li>
-                <li><a href="#" v-on:click.prevent="viewDuration(900)">max</a></li>
+                <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '30min' } }" v-bind:class="{ active: (currentDuration == '30min') }">30min</router-link></li>
+                <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '1hr' } }" v-bind:class="{ active: (currentDuration == '1hr') }">1hr</router-link></li>
+                <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '1day' } }" v-bind:class="{ active: (currentDuration == '1day') }">1day</router-link></li>
+                <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: 'max' } }" v-bind:class="{ active: (currentDuration == 'max') }">max</router-link></li>
               </ul>
             </div>
           </div>
@@ -72,6 +70,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
