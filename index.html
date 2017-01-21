@@ -9,8 +9,8 @@
   </head>
 
   <body>
-    <div id="emoji-trade" class="main-container" v-bind:class="{ fullScreen: isSearchPage }">
-      <div class="header" v-if="!isSearchPage">
+    <div id="emoji-trade" class="main-container" v-bind:class="{ fullScreen: (['search'].indexOf(this.$route.name) >= 0) }">
+      <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
         <div class="row">
           <div class="col-xs-4">
             <h1 class="logo"><router-link to="/">emojitrade</router-link></h1>
@@ -19,21 +19,27 @@
       </div>
 
       <div class="app-contents">
+        <search-form></search-form>
+
         <router-view></router-view>
       </div>
     </div>
 
-    <script type="text/x-template" id="search-page-template">
-      <div class="search-form">
-        <h1 class="logo">emojitrade</h1>
-        <input type="text" class="main-search" placeholder="Search for an emoji">
+    <script type="text/x-template" id="search-form-template">
+      <div class="search-form" v-bind:class="{ onTop: (['search'].indexOf(this.$route.name) < 0) }">
+        <h1 class="logo" v-if="(['search'].indexOf(this.$route.name) >= 0)">emojitrade</h1>
+        <input type="text" class="main-search" placeholder="Search for an emoji" v-bind:class="{ loading: loading }">
       </div>
     </script>
 
     <script type="text/x-template" id="view-emoji-page-template">
       <div class="view-emoji-page">
         <div class="emoji-info">
-          History for "{{emojiId}}"
+          <div class="row">
+            <div class="col-xs-6">
+              <h2>History for "{{emojiId}}"</h2>
+            </div>
+          </div>
         </div>
       </div>
     </script>
@@ -41,6 +47,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js"></script>
