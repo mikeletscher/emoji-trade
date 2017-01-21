@@ -14,6 +14,8 @@
 
   <body>
     <div id="emoji-trade" class="main-container">
+      <div class="loading-symbol"></div>
+
       <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
         <div class="row middle-xs fade-in-after-render">
           <div class="col-xs-4">
@@ -31,7 +33,7 @@
 
     <script type="text/x-template" id="search-home-page-template">
       <div class="gradient-bg">
-        <search-form></search-form>
+        <search-form ref="emojiSearch"></search-form>
       </div>
     </script>
 
@@ -44,7 +46,7 @@
 
     <script type="text/x-template" id="view-emoji-page-template">
       <div class="view-emoji-page">
-        <search-form></search-form>
+        <search-form ref="emojiSearch"></search-form>
 
         <div class="emoji-info fade-in-after-render">
           <div class="row">

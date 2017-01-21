@@ -112,6 +112,8 @@ input.main-search.tt-hint {
 
 .main-container .emoji-info {
   padding: 25px 20px;
+  position: relative;
+  z-index: 90;
   background: #253E5D;
   color: #fff;
 }
@@ -145,9 +147,10 @@ input.main-search.tt-hint {
 
 .full-height-chart {
   position: absolute;
-  top: 152px;
+  top: 142px;
   bottom: 0;
   left: 0;
+  background: #1C324A;
   right: 0;
 }
 
@@ -208,6 +211,29 @@ input.main-search.tt-hint {
 .tt-menu .tt-suggestion:hover,
 .tt-menu .tt-cursor {
   background: #9DFDCE;
+}
+
+/* LOADING */
+.loading-symbol {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
+  background: url(images/emoji/1f642.png) no-repeat;
+  background-size: cover;
+
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@-webkit-keyframes spin {
+    0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
 }
 
 /* RESPONSIVE */

@@ -4,12 +4,11 @@ var SearchForm = {
 
   data: function() {
     return {
-      loading: false
+      loading: true
     };
   },
 
   mounted: function() {
-    this.loading = false;
     var _vm = this;
 
     this.$nextTick(function() {
@@ -73,6 +72,14 @@ var SearchHomePage = {
 
   components: {
     'search-form': SearchForm
+  },
+
+  created: function() {
+    var _vm = this;
+
+    this.$nextTick(function() {
+      _vm.$refs.emojiSearch.loading = false;
+    });
   }
 };
 
@@ -97,6 +104,8 @@ var EmojiViewPage = {
       _vm.chartData = graphData;
 
       _vm.$nextTick(function() {
+        _vm.$refs.emojiSearch.loading = false;
+
         var containerHeight = $('.ct-chart').outerHeight();
 
         _vm.chart = new Chartist.Line('.ct-chart', {
@@ -110,7 +119,7 @@ var EmojiViewPage = {
           height: containerHeight + 'px',
           chartPadding: {
             right: 56,
-            top: 42,
+            top: 55,
             bottom: 48,
             left: 54
           },
@@ -142,9 +151,9 @@ var EmojiViewPage = {
     formatDates: function(dates) {
       return _.map(dates, function(date, index) {
         if (index > 0 && moment(date).format("M/D") == moment(dates[index - 1]).format("M/D")) {
-          return moment(date).format("H:mma");
+          return moment(date).format("h:mma");
         } else {
-          return moment(date).format("M/D H:mma");
+          return moment(date).format("M/D - h:mma");
         }
       });
     },
