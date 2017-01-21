@@ -12,8 +12,6 @@ var SearchForm = {
     this.loading = false;
     var _vm = this;
 
-    this.$on('clear-search-loading', function() { debugger; _vm.loading = false });
-
     this.$nextTick(function() {
       var emojies = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -40,41 +38,62 @@ var SearchForm = {
       }).bind('typeahead:select', function(ev, suggestion) {
         _vm.loading = true;
 
-        var searchForm = $('.search-form');
+        if((['emoji-view']).indexOf(_vm.$route.name) >= 0) {
+          _vm.loading = false;
+          router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
+        } else {
+          var searchForm = $('.search-form');
 
-        var scrollTop = $(window).scrollTop();
-        var elementOffset = searchForm.offset().top;
-        var elementOffsetLeft = searchForm.offset().left;
-        var distance = (elementOffset - scrollTop);
+          var scrollTop = $(window).scrollTop();
+          var elementOffset = searchForm.offset().top;
+          var elementOffsetLeft = searchForm.offset().left;
+          var distance = (elementOffset - scrollTop);
 
-        searchForm.css({ top: distance, left: elementOffsetLeft, marginLeft: 0, position: 'absolute' });
+          searchForm.css({ top: distance, left: elementOffsetLeft, marginLeft: 0, position: 'absolute' });
 
-        TweenMax.to(searchForm, 0.5, { top: 6 });
+          TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 81, ease: Expo.easeOut });
 
-        router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
+          TweenMax.to(searchForm, 0.7, { top: -49, ease: Expo.easeOut, onComplete: function() {
+            router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
+          }});
+        }
       });;
     });
   }
 };
 
 var SearchHomePage = {
-  template: '<div></div>',
+  template: "#search-home-page-template",
 
-  beforeRouteEnter: function(to, from, next) {
-    next(function(vm) {
-      vm.$emit('clear-search-loading');
-      $('.search-form').css({ top: 'auto', left: 'auto', marginLeft: 0, position: 'static' });
-    });
+  components: {
+    'search-form': SearchForm
   }
 };
 
+
 var EmojiViewPage = {
   template: "#view-emoji-page-template",
+
+  data: function() {
+    return {
+      rendered: true
+    };
+  },
+
+  created: function() {
+    this.$nextTick(function() {
+      TweenMax.to($('.fade-in-after-render'), 0.5, { opacity: 1 });
+    });
+  },
 
   computed: {
     emojiId: function() {
       return this.$route.params.emojiId;
     }
+  },
+
+  components: {
+    'search-form': SearchForm
   }
 };
 
@@ -89,9 +108,5 @@ var router = new VueRouter({
 // Main app
 var EmojiTrade = new Vue({
   el: "#emoji-trade",
-  router: router,
-
-  components: {
-    'search-form': SearchForm
-  }
+  router: router
 });
