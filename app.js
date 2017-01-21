@@ -54,11 +54,9 @@ var SearchForm = {
           var elementOffsetLeft = searchForm.offset().left;
           var distance = (elementOffset - scrollTop);
 
-          searchForm.css({ top: distance, left: elementOffsetLeft, marginLeft: 0, position: 'absolute' });
+          TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 85, ease: Expo.easeOut });
 
-          TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 87, ease: Expo.easeOut });
-
-          TweenMax.to(searchForm, 0.7, { top: -43, ease: Expo.easeOut, onComplete: function() {
+          TweenMax.to(searchForm, 0.7, { y: -26, ease: Expo.easeOut, onComplete: function() {
             router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '30min' }});
           }});
         }

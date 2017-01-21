@@ -3,11 +3,11 @@
 
 /* APP */
 html, body {
-  min-height: 100%;
-  height: 100%;
-  overflow-y: hidden;
+  min-height: 100vh;
   padding: 0;
   margin: 0;
+  overflow-y: hidden;
+  height: 100vh;
   background: #1C324A;
   font-family: "proxima-nova-soft", Helvetica, Arial, sans-serif;
 }
@@ -33,8 +33,17 @@ h1.logo, h1.logo a {
   text-decoration: none;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .header {
   padding: 28px 20px;
+
+  height: 86px;
+  box-sizing: border-box;
 
   background: rgba(39,222,244,1);
   background: -moz-linear-gradient(-45deg, rgba(39,222,244,1) 0%, rgba(51,119,255,1) 100%);
@@ -46,9 +55,6 @@ h1.logo, h1.logo a {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27def4', endColorstr='#3377ff', GradientType=1 );
 }
 
-.main-container, .main-container .app-contents {
-  min-height: 100%;
-}
 .main-container .gradient-bg {
   background: rgba(39,222,244,1);
   background: -moz-linear-gradient(-45deg, rgba(39,222,244,1) 0%, rgba(51,119,255,1) 100%);
@@ -65,12 +71,14 @@ h1.logo, h1.logo a {
   left: 0;
   bottom: 0;
 
+  z-index: 99;
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -320px; }
+.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -320px; z-index: 80; }
 .main-container .search-form input.main-search {
   background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 97% 51%;
   background-size: 35px 35px;
@@ -112,8 +120,10 @@ input.main-search.tt-hint {
 
 .main-container .emoji-info {
   padding: 25px 20px;
+  z-index: 80;
+  height: 72px;
   position: relative;
-  z-index: 90;
+  box-sizing: border-box;
   background: #253E5D;
   color: #fff;
 }
@@ -145,13 +155,18 @@ input.main-search.tt-hint {
   display: inline-block;
 }
 
+.full-page {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
 .full-height-chart {
-  position: absolute;
-  top: 142px;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  flex-grow: 1;
+  z-index: 50;
   background: #1C324A;
-  right: 0;
 }
 
 .ct-label.ct-horizontal.ct-end {
@@ -219,6 +234,7 @@ input.main-search.tt-hint {
   width: 40px;
   height: 40px;
   top: 50%;
+  z-index: 1;
   left: 50%;
   margin-left: -20px;
   margin-top: -20px;

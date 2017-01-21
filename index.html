@@ -26,9 +26,7 @@
         </div>
       </div>
 
-      <div class="app-contents">
-        <router-view :key="$route.path"></router-view>
-      </div>
+      <router-view :key="$route.path"></router-view>
     </div>
 
     <script type="text/x-template" id="search-home-page-template">
@@ -45,7 +43,7 @@
     </script>
 
     <script type="text/x-template" id="view-emoji-page-template">
-      <div class="view-emoji-page">
+      <div class="view-emoji-page full-page">
         <search-form ref="emojiSearch"></search-form>
 
         <div class="emoji-info fade-in-after-render">
