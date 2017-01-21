@@ -63,7 +63,13 @@
           </div>
         </div>
 
-        <div class="ct-chart full-height-chart fade-in-after-render"></div>
+        <div class="ct-chart full-height-chart fade-in-after-render" v-if="!errorPresent"></div>
+
+        <div class="error text-center" v-if="errorPresent">
+          <p><img src="images/emoji/1f494.png" alt=""></p>
+          <h1>Oops!</h1>
+          <h3>Something went wrong. Please try refreshing.</h3>
+        </div>
       </div>
     </script>
 

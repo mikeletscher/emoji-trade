@@ -90,58 +90,69 @@ var EmojiViewPage = {
       rendered: true,
       chart: null,
       chartData: {},
-      currentDuration: this.$route.params.duration || '1hr'
+      currentDuration: this.$route.params.duration || '1hr',
+      errorPresent: false
     };
   },
 
   created: function() {
     var _vm = this;
 
-    $.get('http://newminion.com:1234/charts?id=1F602', function(data) {
-      var graphData = JSON.parse(data);
-      _vm.chartData = graphData;
+    $.ajax({
+      url: 'http://newminion.com:1234/charts?id=1F602',
 
-      _vm.$nextTick(function() {
+      success: function(data) {
+        var graphData = JSON.parse(data);
+        _vm.chartData = graphData;
+
+        _vm.$nextTick(function() {
+          _vm.$refs.emojiSearch.loading = false;
+
+          var containerHeight = $('.ct-chart').outerHeight();
+
+          _vm.chart = new Chartist.Line('.ct-chart', {
+            labels: _vm.formatDates(graphData[_vm.currentDuration][0]),
+            series: [
+              graphData[_vm.currentDuration][1]
+            ]
+          }, {
+            axisY: {},
+            fullWidth: true,
+            height: containerHeight + 'px',
+            chartPadding: {
+              right: 56,
+              top: 55,
+              bottom: 48,
+              left: 54
+            },
+            lineSmooth: Chartist.Interpolation.cardinal({
+              tension: 0
+            })
+          });
+
+          _vm.chart.on('draw', function(data) {
+            if(data.type === 'line' || data.type === 'area') {
+              data.element.animate({
+                d: {
+                  begin: 2000 * data.index,
+                  dur: 900,
+                  from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                  to: data.path.clone().stringify(),
+                  easing: Chartist.Svg.Easing.easeOutQuint
+                }
+              });
+            }
+          });
+
+          TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 1 });
+        });
+      },
+
+      error: function(error) {
+        _vm.errorPresent = true;
         _vm.$refs.emojiSearch.loading = false;
-
-        var containerHeight = $('.ct-chart').outerHeight();
-
-        _vm.chart = new Chartist.Line('.ct-chart', {
-          labels: _vm.formatDates(graphData[_vm.currentDuration][0]),
-          series: [
-            graphData[_vm.currentDuration][1]
-          ]
-        }, {
-          axisY: {},
-          fullWidth: true,
-          height: containerHeight + 'px',
-          chartPadding: {
-            right: 56,
-            top: 55,
-            bottom: 48,
-            left: 54
-          },
-          lineSmooth: Chartist.Interpolation.cardinal({
-            tension: 0
-          })
-        });
-
-        _vm.chart.on('draw', function(data) {
-          if(data.type === 'line' || data.type === 'area') {
-            data.element.animate({
-              d: {
-                begin: 2000 * data.index,
-                dur: 900,
-                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                to: data.path.clone().stringify(),
-                easing: Chartist.Svg.Easing.easeOutQuint
-              }
-            });
-          }
-        });
-
-        TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 1 });
-      });
+        $('.loading-symbol').remove();
+      }
     });
   },
 
@@ -170,7 +181,7 @@ var EmojiViewPage = {
         });
 
         TweenMax.to($('.ct-chart'), 0.2, { opacity: 1 });
-      } });
+      }});
     }
   },
 

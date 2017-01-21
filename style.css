@@ -24,6 +24,13 @@ a:hover {
   text-decoration: none;
 }
 
+.error h1 {
+  font-size: 3rem;
+}
+.error h3, .error h1 {
+  color: #fff;
+}
+
 h1.logo, h1.logo a {
   font-size: 1.7rem;
   font-weight: 500;
