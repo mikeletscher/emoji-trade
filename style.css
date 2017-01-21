@@ -5,6 +5,7 @@
 html, body {
   min-height: 100%;
   height: 100%;
+  overflow-y: hidden;
   padding: 0;
   margin: 0;
   background: #1C324A;
@@ -14,6 +15,14 @@ html, body {
 .text-left { text-align: left; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
+
+a {
+  color: #fff;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
 
 h1.logo, h1.logo a {
   font-size: 1.7rem;
@@ -25,7 +34,7 @@ h1.logo, h1.logo a {
 }
 
 .header {
-  padding: 24px 20px;
+  padding: 28px 20px;
 
   background: rgba(39,222,244,1);
   background: -moz-linear-gradient(-45deg, rgba(39,222,244,1) 0%, rgba(51,119,255,1) 100%);
@@ -61,7 +70,7 @@ h1.logo, h1.logo a {
   align-items: center;
 }
 
-.main-container .search-form.onTop { position: absolute; top: 5px; left: 50%; margin-left: -320px; }
+.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -320px; }
 .main-container .search-form input.main-search {
   background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 97% 51%;
   background-size: 35px 35px;
@@ -114,6 +123,37 @@ input.main-search.tt-hint {
 
 .fade-in-after-render {
   opacity: 0;
+}
+
+.range-select {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.range-select li {
+  padding: 2px 5px 2px 12px;
+  display: inline-block;
+}
+
+.full-height-chart {
+  position: absolute;
+  top: 152px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.ct-label {
+  color: #eee;
+}
+
+.ct-grid {
+  stroke: #627C9C;
+}
+
+.ct-series-a .ct-line,
+.ct-series-a .ct-point {
+  stroke: #FE835D;
 }
 
 /* SEARCH */

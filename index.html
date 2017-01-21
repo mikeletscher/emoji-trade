@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>EmojiTrade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.css" />
+
     <link href="style.css" rel="stylesheet" type="text/css">
 
     <script src="https://use.typekit.net/wov4bfo.js"></script>
@@ -11,9 +13,12 @@
   <body>
     <div id="emoji-trade" class="main-container">
       <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
-        <div class="row">
+        <div class="row middle-xs fade-in-after-render">
           <div class="col-xs-4">
             <h1 class="logo"><router-link to="/">emojitrade</router-link></h1>
+          </div>
+          <div class="col-xs-4 col-xs-offset-4 text-right">
+            <a href="#">login</a>
           </div>
         </div>
       </div>
@@ -43,10 +48,22 @@
         <div class="emoji-info fade-in-after-render">
           <div class="row">
             <div class="col-xs-6">
-              <h2>History for "{{emojiId}}"</h2>
+              <h2>history for "{{emojiId}}"</h2>
+            </div>
+
+            <div class="col-xs-6 text-right">
+              <ul class="range-select">
+                <li><a href="#" v-on:click.prevent="viewDuration(900)">5min</a></li>
+                <li><a href="#">30min</a></li>
+                <li><a href="#">1hr</a></li>
+                <li><a href="#">12hr</a></li>
+                <li><a href="#">max</a></li>
+              </ul>
             </div>
           </div>
         </div>
+
+        <div class="ct-chart full-height-chart fade-in-after-render"></div>
       </div>
     </script>
 
@@ -54,6 +71,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>

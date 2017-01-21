@@ -16,12 +16,12 @@ var SearchForm = {
       var emojies = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: ['laugh', 'cry', 'sad']
+        local: ['laugh', 'cry', 'sad', 'mad']
       });
 
       function emojiesWithDefaults(q, sync) {
         if (q === '') {
-          sync(emojies.get('laugh', 'sad'));
+          sync(emojies.get('laugh', 'sad', 'cry', 'mad'));
         } else {
           emojies.search(q, sync);
         }
@@ -51,9 +51,9 @@ var SearchForm = {
 
           searchForm.css({ top: distance, left: elementOffsetLeft, marginLeft: 0, position: 'absolute' });
 
-          TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 81, ease: Expo.easeOut });
+          TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 87, ease: Expo.easeOut });
 
-          TweenMax.to(searchForm, 0.7, { top: -49, ease: Expo.easeOut, onComplete: function() {
+          TweenMax.to(searchForm, 0.7, { top: -43, ease: Expo.easeOut, onComplete: function() {
             router.push({ name: 'emoji-view', params: { emojiId: suggestion }});
           }});
         }
@@ -76,14 +76,69 @@ var EmojiViewPage = {
 
   data: function() {
     return {
-      rendered: true
+      rendered: true,
+      chart: null
     };
   },
 
   created: function() {
+    var _vm = this;
+
     this.$nextTick(function() {
+      var containerHeight = $('.ct-chart').outerHeight();
+
+      _vm.chart = new Chartist.Line('.ct-chart', {
+        labels: ['1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm', '2:15pm'],
+        series: [
+          [12, 9, 7, 8, 5, 8]
+        ]
+      }, {
+        axisY: {
+          onlyInteger: true,
+        },
+        fullWidth: true,
+        height: containerHeight + 'px',
+        chartPadding: {
+          right: 56,
+          top: 42,
+          bottom: 18,
+          left: 20
+        }
+      });
+
+      _vm.chart.on('draw', function(data) {
+        if(data.type === 'line' || data.type === 'area') {
+          data.element.animate({
+            d: {
+              begin: 2000 * data.index,
+              dur: 1200,
+              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+              to: data.path.clone().stringify(),
+              easing: Chartist.Svg.Easing.easeOutQuint
+            }
+          });
+        }
+      });
+
       TweenMax.to($('.fade-in-after-render'), 0.5, { opacity: 1 });
     });
+  },
+
+  methods: {
+    viewDuration: function(duration) {
+      var _vm = this;
+
+      TweenMax.to($('.ct-chart'), 0.5, { opacity: 0, onComplete: function() {
+        _vm.chart.update({
+          labels: ['1:00pm', '1:15pm', '1:30pm', '1:45pm', '2:00pm', '2:15pm'],
+          series: [
+            [4, 3, 5, 1, 4, 9]
+          ]
+        });
+
+        TweenMax.to($('.ct-chart'), 0.3, { opacity: 1 });
+      } });
+    }
   },
 
   computed: {
