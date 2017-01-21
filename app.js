@@ -45,7 +45,7 @@ var SearchForm = {
 
         if((['emoji-view']).indexOf(_vm.$route.name) >= 0) {
           _vm.loading = false;
-          router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '30min' }});
+          router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '1hr' }});
         } else {
           var searchForm = $('.search-form');
 
@@ -57,7 +57,7 @@ var SearchForm = {
           TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 85, ease: Expo.easeOut });
 
           TweenMax.to(searchForm, 0.7, { y: -26, ease: Expo.easeOut, onComplete: function() {
-            router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '30min' }});
+            router.push({ name: 'emoji-view', params: { emojiId: suggestion.name, duration: '1hr' }});
           }});
         }
       });;
@@ -90,7 +90,7 @@ var EmojiViewPage = {
       rendered: true,
       chart: null,
       chartData: {},
-      currentDuration: this.$route.params.duration || '30min'
+      currentDuration: this.$route.params.duration || '1hr'
     };
   },
 
