@@ -18,12 +18,12 @@ var SearchForm = {
       var emojies = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: [{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }]
+        local: [{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }, { img: '1f3d4.png', name: 'mountain' }]
       });
 
       function emojiesWithDefaults(q, sync) {
         if (q === '') {
-          sync([{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }]);
+          sync([{ img: '1f3d7.png', name: 'crane' }, { img: '1f3d0.png', name: 'volleyball' }, { img: '1f3d4.png', name: 'mountain' }]);
         } else {
           emojies.search(q, sync);
         }
