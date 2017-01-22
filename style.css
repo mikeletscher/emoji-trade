@@ -6,7 +6,6 @@ html, body {
   min-height: 100vh;
   padding: 0;
   margin: 0;
-  overflow-y: hidden;
   height: 100vh;
   background: #1C324A;
   font-family: "proxima-nova-soft", Helvetica, Arial, sans-serif;
@@ -97,7 +96,7 @@ h1.logo, h1.logo a {
   font-weight: 300;
   transition: box-shadow 0.2s, background-color 0.2s;
   letter-spacing: 1px;
-  color: #1C324A;
+  color: #fff;
 }
 
 .main-container .search-form input.main-search::-webkit-input-placeholder { color: #fff; }
@@ -111,6 +110,7 @@ h1.logo, h1.logo a {
   background-size: 35px 35px;
   box-shadow: 0 0px 20px rgba(0,0,0,0.14);
   outline: none;
+  color: #1C324A;
 }
 input.main-search.tt-hint {
   background-image: none !important;
@@ -127,7 +127,7 @@ input.main-search.tt-hint {
 
 .main-container .emoji-info {
   padding: 25px 20px;
-  z-index: 80;
+  z-index: 50;
   height: 72px;
   position: relative;
   box-sizing: border-box;
@@ -182,7 +182,15 @@ input.main-search.tt-hint {
   position: relative;
   flex-grow: 1;
   z-index: 50;
+  max-width: 100%;
+  padding: 30px 20px 10px;
   background: #1C324A;
+  box-sizing: border-box;
+}
+
+.tt-menu {
+  max-height: 25vh;
+  overflow-y: auto;
 }
 
 .ct-label.ct-horizontal.ct-end {
@@ -219,6 +227,7 @@ input.main-search.tt-hint {
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
   width: 100%;
+  z-index: 120 !important;
   top: 104% !important;
 }
 .tt-menu .tt-suggestion {
@@ -230,6 +239,7 @@ input.main-search.tt-hint {
 .tt-icon {
   max-width: 30px;
   margin-right: 18px;
+  background: #F6F9FC;
 }
 .tt-menu .tt-suggestion:last-child {
   border-bottom-right-radius: 8px;
@@ -239,7 +249,9 @@ input.main-search.tt-hint {
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 }
-.tt-menu .tt-suggestion:hover,
+.tt-menu .tt-suggestion:hover {
+  background: #F6F9FC;
+}
 .tt-menu .tt-cursor {
   background: #9DFDCE;
 }

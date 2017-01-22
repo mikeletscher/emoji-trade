@@ -38,7 +38,7 @@
     <script type="text/x-template" id="search-form-template">
       <div class="search-form" v-bind:class="{ onTop: (['search'].indexOf(this.$route.name) < 0), 'fade-slide-in-after-render': !(['search'].indexOf(this.$route.name) < 0) }">
         <h1 class="logo" v-if="(['search'].indexOf(this.$route.name) >= 0)">emojitrade</h1>
-        <input type="text" class="main-search" placeholder="Search for an emoji" v-bind:class="{ loading: loading }" v-bind:value="$route.params.emojiId || ''">
+        <input type="text" class="main-search" placeholder="Search for an emoji" v-bind:class="{ loading: loading }" v-bind:value="emojiName">
       </div>
     </script>
 
@@ -48,11 +48,11 @@
 
         <div class="emoji-info fade-in-after-render">
           <div class="row">
-            <div class="col-xs-4">
-              <h2><img :src="'images/emoji/' + emojiId + '.png'" class="info-emoji"> trends</h2>
+            <div class="col-xs-6">
+              <h2><img :src="'images/emoji/' + emojiId + '.png'" class="info-emoji"> current price: ${{emojiPrice}}</h2>
             </div>
 
-            <div class="col-xs-8 text-right">
+            <div class="col-xs-6 text-right">
               <ul class="range-select">
                 <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '30min' } }" v-bind:class="{ active: (currentDuration == '30min') }">30min</router-link></li>
                 <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '1hr' } }" v-bind:class="{ active: (currentDuration == '1hr') }">1hr</router-link></li>
@@ -63,7 +63,9 @@
           </div>
         </div>
 
-        <div class="ct-chart full-height-chart fade-in-after-render" v-if="!errorPresent"></div>
+        <div class="full-height-chart fade-in-after-render" v-if="!errorPresent">
+          <canvas class="emoji-chart"></canvas>
+        </div>
 
         <div class="error text-center" v-if="errorPresent">
           <p><img src="images/emoji/1f494.png" alt=""></p>
@@ -78,7 +80,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
