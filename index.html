@@ -48,11 +48,11 @@
 
         <div class="emoji-info fade-in-after-render">
           <div class="row">
-            <div class="col-xs-5">
-              <h2>history for "{{emojiId}}"</h2>
+            <div class="col-xs-4">
+              <h2><img :src="'images/emoji/' + emojiId + '.png'" class="info-emoji"> trends</h2>
             </div>
 
-            <div class="col-xs-7 text-right">
+            <div class="col-xs-8 text-right">
               <ul class="range-select">
                 <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '30min' } }" v-bind:class="{ active: (currentDuration == '30min') }">30min</router-link></li>
                 <li><router-link :to="{ name: 'emoji-view', params: { emojiId: emojiId, duration: '1hr' } }" v-bind:class="{ active: (currentDuration == '1hr') }">1hr</router-link></li>
