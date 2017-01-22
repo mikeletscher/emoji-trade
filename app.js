@@ -15,10 +15,20 @@ var SearchForm = {
     };
   },
 
+  methods: {
+    clearSearch: function(e) {
+      $(e.target).val('');
+
+      $('.main-search').off('focus').on('focus', this.clearSearch);
+    }
+  },
+
   mounted: function() {
     var _vm = this;
 
     this.$nextTick(function() {
+      $('.main-search').on('focus', _vm.clearSearch);
+
       TweenMax.to($('.fade-slide-in-after-render'), 1, { opacity: 1, y: 0 });
 
       var emojies = new Bloodhound({
