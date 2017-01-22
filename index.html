@@ -14,16 +14,23 @@
 
   <body>
     <div id="emoji-trade" class="main-container">
-      <div class="loading-symbol"></div>
+      <div class="loading-symbol" v-if="(['emoji-view'].indexOf(this.$route.name) >= 0)"></div>
 
       <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
         <div class="row middle-xs fade-in-after-render">
           <div class="col-xs-4">
             <h1 class="logo hide-mobile"><router-link to="/">emojitrade</router-link></h1>
           </div>
-          <div class="col-xs-4 col-xs-offset-4 text-right">
-            <router-link to="/login">login</router-link>
-            <router-link to="/login">register</router-link>
+          <div class="col-xs-4 col-xs-offset-4 text-right nav-links">
+            <span v-if="!isLoggedIn">
+              <router-link to="/users/login">login</router-link>
+              <router-link to="/users/register">register</router-link>
+            </span>
+
+            <span v-if="isLoggedIn">
+              <router-link to="/portfolio">portfolio</router-link>
+              <router-link to="/users/logout">logout</router-link>
+            </span>
           </div>
         </div>
       </div>
@@ -34,6 +41,52 @@
     <script type="text/x-template" id="search-home-page-template">
       <div class="gradient-bg">
         <search-form ref="emojiSearch"></search-form>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="login-page-template">
+      <div class="full-page fade-in-after-render">
+        <search-form ref="emojiSearch"></search-form>
+
+        <div class="middle-form">
+          <h2>login to trade</h2>
+
+          <div class="error-message" v-show="errors">
+            <p>Invalid login information. Please try again.</p>
+          </div>
+
+          <form action="#" v-on:submit.prevent="submitLogin">
+            <div class="field">
+              <label for="username">username</label>
+              <input type="text" id="username" name="username" class="text-field">
+            </div>
+
+            <div class="field">
+              <label for="password">password</label>
+              <input type="password" id="password" name="password" class="text-field">
+            </div>
+
+            <div class="actions">
+              <input type="submit" name="submit" value="Login" class="button">
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="register-page-template">
+      <div>
+        <search-form ref="emojiSearch"></search-form>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="portfolio-page-template">
+      <div>
+        <search-form ref="emojiSearch"></search-form>
+
+        <div class="emoji-info">
+          <h2>my portfolio</h2>
+        </div>
       </div>
     </script>
 
@@ -78,6 +131,8 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
