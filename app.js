@@ -142,7 +142,6 @@ var EmojiViewPage = {
               datasets: [{
                 data: graphData[_vm.currentDuration][1],
                 borderColor: "#FE835D",
-                fill: false,
                 borderWidth: 4,
                 borderJoinStyle: 'round',
                 lineTension: 0,

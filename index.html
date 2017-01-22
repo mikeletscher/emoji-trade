@@ -19,7 +19,7 @@
       <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
         <div class="row middle-xs fade-in-after-render">
           <div class="col-xs-4">
-            <h1 class="logo"><router-link to="/">emojitrade</router-link></h1>
+            <h1 class="logo hide-mobile"><router-link to="/">emojitrade</router-link></h1>
           </div>
           <div class="col-xs-4 col-xs-offset-4 text-right">
           </div>
@@ -49,7 +49,7 @@
         <div class="emoji-info fade-in-after-render">
           <div class="row">
             <div class="col-xs-6">
-              <h2><img :src="'images/emoji/' + emojiId + '.png'" class="info-emoji"> current price: ${{emojiPrice}}</h2>
+              <h2><img :src="'images/emoji/' + emojiId + '.png'" class="info-emoji"><span class="hide-mobile"> current price: </span> ${{emojiPrice}}</h2>
             </div>
 
             <div class="col-xs-6 text-right">
