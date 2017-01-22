@@ -37,7 +37,7 @@
 
     <script type="text/x-template" id="search-form-template">
       <div class="search-form" v-bind:class="{ onTop: (['search'].indexOf(this.$route.name) < 0), 'fade-slide-in-after-render': !(['search'].indexOf(this.$route.name) < 0) }">
-        <h1 class="logo" v-if="(['search'].indexOf(this.$route.name) >= 0)">emojitrade</h1>
+        <h1 class="logo" v-if="(['search'].indexOf(this.$route.name) >= 0)"><span>emoji</span>trade</h1>
         <input type="text" class="main-search" placeholder="Search for an emoji" v-bind:class="{ loading: loading }" v-bind:value="emojiName">
       </div>
     </script>
