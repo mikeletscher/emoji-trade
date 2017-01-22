@@ -19,7 +19,7 @@ var SearchForm = {
     clearSearch: function(e) {
       $(e.target).val('');
 
-      $('.main-search').off('focus').on('focus', this.clearSearch);
+      $('.main-search').off('click').on('click', this.clearSearch);
     }
   },
 
@@ -27,7 +27,7 @@ var SearchForm = {
     var _vm = this;
 
     this.$nextTick(function() {
-      $('.main-search').on('focus', _vm.clearSearch);
+      $('.main-search').on('click', _vm.clearSearch);
 
       TweenMax.to($('.fade-slide-in-after-render'), 1, { opacity: 1, y: 0 });
 
@@ -43,6 +43,7 @@ var SearchForm = {
           sync([
             { code: '1f602', name: 'face with tears of joy' },
             { code: '1f1fa-1f1f8', name: 'regional indicator symbol letters us' },
+            { code: '1f4b8', name: 'money with wings' },
             { code: '1f4a9', name: 'pile of poo' }
           ]);
         } else {
@@ -65,7 +66,8 @@ var SearchForm = {
         }
       }).bind('typeahead:select', function(ev, suggestion) {
         if (_vm.emojiName == suggestion.name) {
-          return false;
+          $('.main-search').val('').blur();
+          return;
         }
 
         _vm.loading = true;
@@ -177,60 +179,6 @@ var EmojiViewPage = {
               }
             }
           });
-
-
-
-          // _vm.chart = new Chartist.Line('.ct-chart', {
-          //   labels: _vm.formatDates(graphData[_vm.currentDuration][0]),
-          //   series: [
-          //     graphData[_vm.currentDuration][1]
-          //   ]
-          // }, {
-          //   axisX: {
-          //     labelInterpolationFnc: function skipLabels(value, index) {
-          //       if (['max', '1day'].indexOf(_vm.currentDuration) < 0) {
-          //         return value;
-          //       } else {
-          //         return index % 5  === 0 ? value : null;
-          //       }
-          //     }
-          //   },
-
-          //   axisY: {
-          //     labelInterpolationFnc: function skipLabels(value, index) {
-          //       return index % 2  === 0 ? value : null;
-          //     }
-          //   },
-
-          //   fullWidth: true,
-          //   height: containerHeight + 'px',
-          //   showPoint: false,
-
-          //   chartPadding: {
-          //     right: 56,
-          //     top: 55,
-          //     bottom: 48,
-          //     left: 54
-          //   },
-
-          //   lineSmooth: Chartist.Interpolation.cardinal({
-          //     tension: 0
-          //   })
-          // });
-
-          // _vm.chart.on('draw', function(data) {
-          //   if(data.type === 'line' || data.type === 'area') {
-          //     data.element.animate({
-          //       d: {
-          //         begin: 2000 * data.index,
-          //         dur: 900,
-          //         from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-          //         to: data.path.clone().stringify(),
-          //         easing: Chartist.Svg.Easing.easeOutQuint
-          //       }
-          //     });
-          //   }
-          // });
 
           TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 1 });
         });

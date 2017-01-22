@@ -196,6 +196,11 @@ input.main-search.tt-hint {
   overflow-y: auto;
 }
 
+strong.tt-highlight {
+  font-weight: 300;
+  color: #41B977;
+}
+
 .ct-label.ct-horizontal.ct-end {
   display: block;
   overflow: hidden;
@@ -238,6 +243,12 @@ input.main-search.tt-hint {
   cursor: pointer;
   display: flex;
   align-items: center;
+  max-width: 100%;
+
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tt-icon {
   max-width: 30px;
