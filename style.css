@@ -84,12 +84,13 @@ h1.logo, h1.logo a {
   align-items: center;
 }
 
-.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -320px; z-index: 80; }
+.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -300px; z-index: 80; }
 .main-container .search-form input.main-search {
-  background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 97% 51%;
+  background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 2.4% 51%;
   background-size: 35px 35px;
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 20px 20px 65px;
+  box-sizing: border-box !important;
   font-size: 1.5rem;
   border: 0;
   min-width: 600px;
@@ -105,10 +106,11 @@ h1.logo, h1.logo a {
 .main-container .search-form input.main-search:-ms-input-placeholder { color: #fff; }
 
 .main-container .search-form input.main-search:focus {
-  background: #fff url(images/search-icon-active.png) no-repeat 97% 51%;
+  background: #fff url(images/search-icon-active.png) no-repeat 2.4% 51%;
   background-color: #fff !important;
   background-size: 35px 35px;
   box-shadow: 0 0px 20px rgba(0,0,0,0.14);
+  box-sizing: border-box !important;
   outline: none;
   color: #1C324A;
 }
@@ -117,8 +119,9 @@ input.main-search.tt-hint {
   box-shadow: none !important;
 }
 .main-container .search-form input.main-search.loading {
-  background: rgba(255, 255, 255, 0.35) url(images/loading.gif) no-repeat 97% 51%;
+  background: rgba(255, 255, 255, 0.35) url(images/loading.gif) no-repeat 2.4% 51%;
   background-color: rgba(255, 255, 255, 0.35) !important;
+  box-sizing: border-box !important;
   background-size: 35px 35px;
 }
 .main-container .search-form h1.logo {
@@ -283,7 +286,7 @@ input.main-search.tt-hint {
 /* RESPONSIVE */
 @media screen and (max-width: 700px) {
   .main-container .search-form input.main-search {
-    background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 97% 51%;
+    background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 2.4% 51%;
     background-size: 35px 35px;
     border-radius: 8px;
     border: 0;
