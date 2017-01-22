@@ -21,7 +21,7 @@
           <div class="col-xs-4">
             <h1 class="logo hide-mobile"><router-link to="/">emojitrade</router-link></h1>
           </div>
-          <div class="col-xs-4 col-xs-offset-4 text-right nav-links">
+          <div class="col-xs-4 col-xs-offset-4 text-right nav-links hide-mobile">
             <span v-if="!isLoggedIn">
               <router-link to="/users/login">login</router-link>
               <router-link to="/users/register">register</router-link>
@@ -75,8 +75,32 @@
     </script>
 
     <script type="text/x-template" id="register-page-template">
-      <div>
+      <div class="full-page fade-in-after-render">
         <search-form ref="emojiSearch"></search-form>
+
+        <div class="middle-form">
+          <h2>register to trade</h2>
+
+          <div class="error-message" v-show="errors">
+            <p>Invalid registration. Please fix your information.</p>
+          </div>
+
+          <form action="#" v-on:submit.prevent="submitRegistration">
+            <div class="field">
+              <label for="username">username</label>
+              <input type="text" id="username" name="username" class="text-field">
+            </div>
+
+            <div class="field">
+              <label for="password">password</label>
+              <input type="password" id="password" name="password" class="text-field">
+            </div>
+
+            <div class="actions">
+              <input type="submit" name="submit" value="Register" class="button">
+            </div>
+          </form>
+        </div>
       </div>
     </script>
 

@@ -197,11 +197,7 @@ var EmojiViewPage = {
   methods: {
     formatDates: function(dates) {
       return _.map(dates, function(date, index) {
-        if (index > 0 && moment(date).format("M/D") == moment(dates[index - 1]).format("M/D")) {
-          return moment(date).format("h:mma");
-        } else {
-          return moment(date).format("M/D - h:mma");
-        }
+        return moment(date).format("M/D - h:mma");
       });
     }
   },
@@ -245,7 +241,10 @@ var LoginPage = {
 
             _vm.$parent.isLoggedIn = true;
 
-            router.replace({ name: 'portfolio' });
+
+            TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 0, onComplete: function() {
+              router.replace({ name: 'portfolio' });
+            }});
           },
           error: function(response) {
             _vm.errors = true;
@@ -275,6 +274,48 @@ var LoginPage = {
 
 var RegisterPage = {
   template: "#register-page-template",
+
+  data: function() {
+    return {
+      errors: false
+    };
+  },
+
+  methods: {
+    submitRegistration: function(event) {
+      var registerForm = $(event.target);
+      var hash = registerForm.serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});;
+
+      var _vm = this;
+
+      if (hash.username.trim() != "" && hash.password.trim() != "") {
+        $('.actions .button').val('Loading...');
+
+        $.ajax({
+          url: API_URL + 'users',
+          method: 'post',
+          data: hash,
+          success: function(response) {
+            Cookies.set('et_token', response, { expires: 14 });
+
+            _vm.$parent.isLoggedIn = true;
+
+            TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 0, onComplete: function() {
+              router.replace({ name: 'portfolio' });
+            }});
+          },
+          error: function(response) {
+            _vm.errors = true;
+
+            $('.field #password').val('').focus();
+            $('.actions .button').val('Register');
+          }
+        });
+      } else {
+        this.errors = true;
+      }
+    }
+  },
 
   created: function() {
     var _vm = this;
