@@ -50,8 +50,12 @@ h1.logo, h1.logo a {
   padding: 28px 20px;
 
   height: 86px;
+  position: relative;
+  z-index: 999;
   box-sizing: border-box;
+}
 
+.header.background {
   background: rgba(39,222,244,1);
   background: -moz-linear-gradient(-45deg, rgba(39,222,244,1) 0%, rgba(51,119,255,1) 100%);
   background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(39,222,244,1)), color-stop(100%, rgba(51,119,255,1)));
@@ -85,7 +89,7 @@ h1.logo, h1.logo a {
   align-items: center;
 }
 
-.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -300px; z-index: 80; }
+.main-container .search-form.onTop { position: absolute; top: 10px; left: 50%; margin-left: -300px; z-index: 10000; }
 .main-container .search-form input.main-search {
   background: rgba(255, 255, 255, 0.35) url(images/search-icon.png) no-repeat 2.4% 51%;
   background-size: 35px 35px;

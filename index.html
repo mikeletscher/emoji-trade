@@ -16,7 +16,7 @@
     <div id="emoji-trade" class="main-container">
       <div class="loading-symbol" v-if="(['emoji-view'].indexOf(this.$route.name) >= 0)"></div>
 
-      <div class="header" v-if="!(['search'].indexOf(this.$route.name) >= 0)">
+      <div class="header" v-bind:class="{ background: (['search'].indexOf(this.$route.name) < 0) }">
         <div class="row middle-xs fade-in-after-render">
           <div class="col-xs-4">
             <h1 class="logo hide-mobile"><router-link to="/">emojitrade</router-link></h1>
@@ -92,7 +92,6 @@
 
     <script type="text/x-template" id="search-form-template">
       <div class="search-form" v-bind:class="{ onTop: (['search'].indexOf(this.$route.name) < 0), 'fade-slide-in-after-render': !(['search'].indexOf(this.$route.name) < 0) }">
-        <h1 class="logo" v-if="(['search'].indexOf(this.$route.name) >= 0)"><span>emoji</span>trade</h1>
         <input type="text" class="main-search" placeholder="Search for an emoji" v-bind:class="{ loading: loading }" v-bind:value="emojiName">
       </div>
     </script>

@@ -31,6 +31,7 @@ var SearchForm = {
     this.$nextTick(function() {
       $('.main-search').on('click', _vm.clearSearch);
 
+      TweenMax.to($('.fade-in-after-render'), 0.3, { opacity: 1 });
       TweenMax.to($('.fade-slide-in-after-render'), 1, { opacity: 1, y: 0 });
 
       var emojies = new Bloodhound({
@@ -79,7 +80,7 @@ var SearchForm = {
           router.push({ name: 'emoji-view', params: { emojiId: suggestion.code, duration: _vm.$route.params.duration || '1hr' }});
         } else {
           TweenMax.to($('.gradient-bg'), 0.7, { bottom: $(window).height() - 85, ease: Expo.easeOut });
-          TweenMax.to($('.search-form'), 0.7, { y: -26, ease: Expo.easeOut, onComplete: function() {
+          TweenMax.to($('.search-form'), 0.7, { y: 1, ease: Expo.easeOut, onComplete: function() {
             router.push({ name: 'emoji-view', params: { emojiId: suggestion.code, duration: _vm.$route.params.duration || '1hr' }});
           }});
         }
