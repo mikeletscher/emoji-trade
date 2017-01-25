@@ -373,10 +373,10 @@ var router = new VueRouter({
   routes: [
     { path: '/', name: 'search', component: SearchHomePage },
     { path: '/emoji/:emojiId/:duration', name: 'emoji-view', component: EmojiViewPage },
-    { path: '/users/login', name: 'login', component: LoginPage },
-    { path: '/users/logout', name: 'logout', component: LogoutRoute },
-    { path: '/users/register', name: 'register', component: RegisterPage },
-    { path: '/portfolio', name: 'portfolio', component: PortfolioPage },
+    // { path: '/users/login', name: 'login', component: LoginPage },
+    // { path: '/users/logout', name: 'logout', component: LogoutRoute },
+    // { path: '/users/register', name: 'register', component: RegisterPage },
+    // { path: '/portfolio', name: 'portfolio', component: PortfolioPage },
   ]
 });
 

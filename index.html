@@ -22,7 +22,7 @@
             <h1 class="logo hide-mobile"><router-link to="/">emojitrade</router-link></h1>
           </div>
           <div class="col-xs-4 col-xs-offset-4 text-right nav-links hide-mobile">
-            <span v-if="!isLoggedIn">
+            <span v-if="isLoggedIn">
               <router-link to="/users/login">login</router-link>
               <router-link to="/users/register">register</router-link>
             </span>
